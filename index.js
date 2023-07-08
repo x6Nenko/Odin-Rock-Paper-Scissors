@@ -69,4 +69,4 @@ function game() {
     computerScore = 0;
 };
 
-game();
+// game();
