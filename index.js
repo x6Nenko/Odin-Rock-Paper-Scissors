@@ -1,29 +1,4 @@
-// getComputerChoice and score vars
-
-function getComputerChoice() {
-    const choicesArray = ["rock", "paper", "scissors"];
-    const makeChoice = Math.floor(Math.random() * choicesArray.length);
-
-    return choicesArray[makeChoice];
-};
-
-let playerScore = 0;
-let computerScore = 0;
-
-function countScore(result) {
-    if (playerScore === 3) {
-        
-    }
-
-    if (result === "won") {
-        playerScore += 1;
-    } else if (result === "lose") {
-        computerScore += 1;
-    };
-};
-
-
-// Button event listeners
+// vars
 
 const rockBtn = document.getElementById('rock');
 const paperBtn = document.getElementById('paper');
@@ -32,6 +7,78 @@ const rules = document.getElementById('rules');
 
 const playerImage = document.getElementById('playerImage');
 const aiImage = document.getElementById('aiImage');
+
+const explanation = document.getElementById('explanation');
+const determination = document.getElementById('determination');
+
+const playerPoints = document.getElementById('playerPoints');
+const computerPoints = document.getElementById('computerPoints');
+const playerPointsOnTable = document.getElementById('playerPointsOnTable');
+const computerPointsOnTable = document.getElementById('computerPointsOnTable');
+
+const playerCard = document.querySelector('.player');
+const computerCard = document.querySelector('.computer');
+
+let playerScore = 0;
+let computerScore = 0;
+
+// Announce winner, score count functions and random AI choice
+
+function getComputerChoice() {
+    const choicesArray = ["rock", "paper", "scissors"];
+    const makeChoice = Math.floor(Math.random() * choicesArray.length);
+
+    return choicesArray[makeChoice];
+};
+
+function announceWinner() {
+    if (playerScore > computerScore) {
+        console.log("You won.")
+    } else {
+        console.log("You lose.");
+    };
+
+    playerScore = 0;
+    computerScore = 0;
+
+    playerPoints.innerText = playerScore;
+    playerPointsOnTable.innerText = playerScore;
+    computerPoints.innerText = computerScore;
+    computerPointsOnTable.innerText = computerScore;
+}
+
+function countScore(result) {
+    playerCard.classList.remove('won');
+    playerCard.classList.remove('lose');
+    computerCard.classList.remove('won');
+    computerCard.classList.remove('lose');
+
+    if (result === "won") {
+        playerScore += 1;
+        playerPoints.innerText = playerScore;
+        playerPointsOnTable.innerText = playerScore;
+        playerCard.classList.add('won');
+        computerCard.classList.add('lose');
+    } else if (result === "lose") {
+        computerScore += 1;
+        computerPoints.innerText = computerScore;
+        computerPointsOnTable.innerText = computerScore;
+        playerCard.classList.add('lose');
+        computerCard.classList.add('won');
+    } else if (result === "draw") {
+        playerCard.classList.remove('won');
+        playerCard.classList.remove('lose');
+        computerCard.classList.remove('won');
+        computerCard.classList.remove('lose');
+    };
+
+    if (playerScore === 3 || computerScore === 3) {
+        return announceWinner();
+    }
+};
+
+
+// Button event listeners
 
 rockBtn.addEventListener("click", function() {
     rules.style.display = "none";
@@ -51,13 +98,7 @@ scissorsBtn.addEventListener("click", function() {
 
 // Play round
 
-const explanation = document.getElementById('explanation');
-const determination = document.getElementById('determination');
-
-function playRound(playerSelection, computerSelection) {
-    const player = playerSelection.toLowerCase();
-    const computer = computerSelection.toLowerCase();
-
+function setImages(player, computer) {
     if (player === "rock") {
         playerImage.src='./assets/Stone-LG.png';
         playerImage.alt='stone';
@@ -79,19 +120,27 @@ function playRound(playerSelection, computerSelection) {
         aiImage.src='./assets/Scissors-LG.png';
         aiImage.alt='scissors';
     }
+}
+
+function playRound(playerSelection, computerSelection) {
+    const player = playerSelection.toLowerCase();
+    const computer = computerSelection.toLowerCase();
+
+    setImages(player, computer);
 
     if (player === "rock") {
         if (computer === "rock") {
+            countScore('draw');
             explanation.innerText = 'Rock equals Rock';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
             return console.log("Draw!");
         } else if (computer === "scissors") {
-            playerScore += 1;
+            countScore("won");
             explanation.innerText = 'Rock beats Scissors';
             determination.innerHTML = 'You <span>won</span> the round!';
             return console.log("You Won! Rock beats Scissors");
         } else if (computer === "paper") {
-            computerScore += 1;
+            countScore("lose");
             explanation.innerText = 'Paper beats Rock';
             determination.innerHTML = 'You <span>lose</span> the round!';
             return console.log("You Lose! Paper beats Rock");
@@ -100,16 +149,17 @@ function playRound(playerSelection, computerSelection) {
 
     if (player === "paper") {
         if (computer === "paper") {
+            countScore('draw');
             explanation.innerText = 'Paper equals Paper';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
             return console.log("Draw!");
         } else if (computer === "rock") {
-            playerScore += 1;
+            countScore("won");
             explanation.innerText = 'Paper beats Rock';
             determination.innerHTML = 'You <span>won</span> the round!';
             return console.log("You Won! Paper beats Rock");
         } else if (computer === "scissors") {
-            computerScore += 1;
+            countScore("lose");
             explanation.innerText = 'Scissors beats Paper';
             determination.innerHTML = 'You <span>lose</span> the round!';
             return console.log("You Lose! Scissors beats Paper");
@@ -122,12 +172,12 @@ function playRound(playerSelection, computerSelection) {
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
             return console.log("Draw!");
         } else if (computer === "paper") {
-            playerScore += 1;
+            countScore("won");
             explanation.innerText = 'Scissors beats Paper';
             determination.innerHTML = 'You <span>won</span> the round!';
             return console.log("You Won! Scissors beats Paper");
         } else if (computer === "rock") {
-            computerScore += 1;
+            countScore("lose");
             explanation.innerText = 'Rock beats Scissors';
             determination.innerHTML = 'You <span>lose</span> the round!';
             return console.log("You Lose! Rock beats Scissors");
