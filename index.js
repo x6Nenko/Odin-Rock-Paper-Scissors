@@ -24,11 +24,43 @@ const finalResult = document.getElementById('finalResult');
 const playAgainBtn = document.getElementById('playAgain');
 
 const finalHeading = document.getElementById('finalHeading');
+const finalLog = document.getElementById('finalLog');
+const finalLogScore = document.getElementById('finalLogScore');
+const randomQuote = document.getElementById('randomQuote');
+
+const circleOne = document.querySelectorAll('.plus-one');
+const circleTwo = document.querySelectorAll('.plus-two');
+const circleThree = document.querySelectorAll('.plus-three');
 
 let playerScore = 0;
 let computerScore = 0;
 
 // Announce winner, score count functions and random AI choice + everything related
+
+const loseQuotes = [
+    "Pathetic! You're no match for my genius.",
+    "Hahaha! You thought you stood a chance?",
+    "Foolish human, your defeat was inevitable."
+];
+const winQuotes =[
+    "Lucky streak, but it won't last long against my brilliance.",
+    "You may have won this battle, but I will triumph in the end.",
+    "Impressive, but you're merely playing into my grand plan."
+];
+
+function setQuote(result) {
+    if (result === "won") {
+        const randomIndex = Math.floor(Math.random() * winQuotes.length);
+        const quote = winQuotes[randomIndex];
+        randomQuote.innerText = quote;
+        console.log(randomQuote);
+    } else if (result === "lose") {
+        const randomIndex = Math.floor(Math.random() * loseQuotes.length);
+        const quote = loseQuotes[randomIndex];
+        randomQuote.innerText = quote;
+        console.log(randomQuote);
+    }
+};
 
 function getComputerChoice() {
     const choicesArray = ["rock", "paper", "scissors"];
@@ -44,17 +76,52 @@ function showScore() {
     computerPointsOnTable.innerText = computerScore;
 }
 
+function setUpModal(result) {
+    if (result === "won") {
+        modalOverlay.classList.add('open');
+        finalResult.classList.add('open');
+        finalResult.classList.add('won');
+        circleOne.forEach(circle => {
+            circle.style.backgroundColor = "#B5CEA6";
+        });
+        circleTwo.forEach(circle => {
+            circle.style.backgroundColor = "#9BB68B";
+        });
+        circleThree.forEach(circle => {
+            circle.style.backgroundColor = "#7AA760";
+        });
+    } else if (result === "lose") {
+        modalOverlay.classList.add('open');
+        finalResult.classList.add('open');
+        finalResult.classList.add('lose');
+        circleOne.forEach(circle => {
+            circle.style.backgroundColor = "#CEA6A6";
+        });
+        circleTwo.forEach(circle => {
+            circle.style.backgroundColor = "#B68B8B";
+        });
+        circleThree.forEach(circle => {
+            circle.style.backgroundColor = "#A76060";
+        });
+    }
+}
+
 function announceWinner() {
+    finalResult.classList.remove('won');
+    finalResult.classList.remove('lose');
+
     if (playerScore > computerScore) {
-        modalOverlay.classList.add('open');
-        finalResult.classList.add('open');
-        finalHeading.innerText = 'Victory!'
-        console.log("You won.")
+        setUpModal("won");
+        setQuote("won");
+        finalLog.innerText = `${explanation.innerText}. ${determination.innerText}`;
+        finalLogScore.innerText = `The final score is ${playerPointsOnTable.innerText} - ${computerPointsOnTable.innerText}.`;
+        finalHeading.innerText = 'Victory!';
     } else {
-        modalOverlay.classList.add('open');
-        finalResult.classList.add('open');
+        setUpModal("lose");
+        setQuote("lose");
+        finalLog.innerText = `${explanation.innerText}. ${determination.innerText}`;
+        finalLogScore.innerText = `The final score is ${playerPointsOnTable.innerText} - ${computerPointsOnTable.innerText}.`;
         finalHeading.innerText = 'Defeat!'
-        console.log("You lose.");
     };
 
     playerScore = 0;
@@ -64,6 +131,11 @@ function announceWinner() {
 };
 
 function setColorBorders(result) {
+    playerCard.classList.remove('won');
+    playerCard.classList.remove('lose');
+    computerCard.classList.remove('won');
+    computerCard.classList.remove('lose');
+
     if (result === "won") {
         playerCard.classList.add('won');
         computerCard.classList.add('lose'); 
@@ -157,80 +229,49 @@ function playRound(playerSelection, computerSelection) {
 
     if (player === "rock") {
         if (computer === "rock") {
-            countScore('draw');
             explanation.innerText = 'Rock equals Rock';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
-            return console.log("Draw!");
+            countScore('draw');
         } else if (computer === "scissors") {
-            countScore("won");
             explanation.innerText = 'Rock beats Scissors';
             determination.innerHTML = 'You <span>won</span> the round!';
-            return console.log("You Won! Rock beats Scissors");
+            countScore("won");
         } else if (computer === "paper") {
-            countScore("lose");
             explanation.innerText = 'Paper beats Rock';
             determination.innerHTML = 'You <span>lose</span> the round!';
-            return console.log("You Lose! Paper beats Rock");
+            countScore("lose");
         }
     };
 
     if (player === "paper") {
         if (computer === "paper") {
-            countScore('draw');
             explanation.innerText = 'Paper equals Paper';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
-            return console.log("Draw!");
+            countScore('draw');
         } else if (computer === "rock") {
-            countScore("won");
             explanation.innerText = 'Paper beats Rock';
             determination.innerHTML = 'You <span>won</span> the round!';
-            return console.log("You Won! Paper beats Rock");
+            countScore("won");
         } else if (computer === "scissors") {
-            countScore("lose");
             explanation.innerText = 'Scissors beats Paper';
             determination.innerHTML = 'You <span>lose</span> the round!';
-            return console.log("You Lose! Scissors beats Paper");
+            countScore("lose");
         }
     };
 
     if (player === "scissors") {
         if (computer === "scissors") {
-            countScore('draw');
             explanation.innerText = 'Scissors equals Scissors';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
-            return console.log("Draw!");
+            countScore('draw');
         } else if (computer === "paper") {
-            countScore("won");
             explanation.innerText = 'Scissors beats Paper';
             determination.innerHTML = 'You <span>won</span> the round!';
-            return console.log("You Won! Scissors beats Paper");
+            countScore("won");
         } else if (computer === "rock") {
-            countScore("lose");
             explanation.innerText = 'Rock beats Scissors';
             determination.innerHTML = 'You <span>lose</span> the round!';
-            return console.log("You Lose! Rock beats Scissors");
+            countScore("lose");
         }
     };
-};
-
-function game() {
-    for (let index = 0; index < 5; index++) {
-        const computerSelection = getComputerChoice().toLowerCase();
-        const playerSelection = prompt("Whats your choice?").toLowerCase();
-        playRound(playerSelection, computerSelection);
-        console.log(playerScore, computerScore);
-    };
-
-    if (playerScore === computerScore) {
-        console.log("Close one. It's a Draw!");
-    } else if (playerScore > computerScore) {
-        console.log("Player has Won!");
-    } else if (computerScore > playerScore) {
-        console.log("Computer has Won!");
-    };
-    
-    playerScore = 0;
-    computerScore = 0;
-};
-
-// game();
+}; 

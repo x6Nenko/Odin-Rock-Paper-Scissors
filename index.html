@@ -5,7 +5,7 @@
     <title>Rock Paper Scissors</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,9 +14,26 @@
 
         <div class="modal-overlay" id="modalOverlay"></div>
         <div class="final-result" id="finalResult">
-            <!-- <h2 class="explanation">Scissors beats Paper</h2> -->
+            <p class="final-log" id="finalLog"></p>
+            <p class="final-log" id="finalLogScore"></p>
             <h1 id="finalHeading"></h1>
             <button class="play-again-btn" id="playAgain">Play again!</button>
+            <div class="circles">
+                <div class="circle plus-three"></div>
+                <div class="circle plus-two"></div>
+                <div class="circle plus-one"></div>
+                <div class="circle neutral"></div>
+                <div class="circle plus-one" ></div>
+                <div class="circle plus-two"></div>
+                <div class="circle plus-three"></div>
+            </div>
+            <article class="ai-quote">
+                <div class="ai-profile">
+                    <img src="./assets/Deepfake-Ai.png" alt="ai icon" class="player-icon">
+                    <h2>AI</h2>
+                </div>
+                <p id="randomQuote"></p>
+            </article>
         </div>
 
         <main>
@@ -48,7 +65,7 @@
             </div>
 
             <article class="card computer">
-                <img src="./assets/Deepfake-Ai.png" alt="player icon" class="player-icon">
+                <img src="./assets/Deepfake-Ai.png" alt="ai icon" class="player-icon">
                 <div class="info">
                     <h2>AI</h2>
                     <p>Points: <span id="computerPoints">0</span></p>
