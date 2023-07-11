@@ -231,6 +231,7 @@ main {
 
 .circles {
     margin-top: 60px;
+    margin-bottom: 20px;
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -260,4 +261,5 @@ main {
     font-family: 'Roboto Mono', monospace;
     font-weight: 300;
     font-size: 1.5rem;
+    text-align: left;
 }
