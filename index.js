@@ -19,6 +19,12 @@ const computerPointsOnTable = document.getElementById('computerPointsOnTable');
 const playerCard = document.querySelector('.player');
 const computerCard = document.querySelector('.computer');
 
+const modalOverlay = document.getElementById('modalOverlay');
+const finalResult = document.getElementById('finalResult');
+const playAgainBtn = document.getElementById('playAgain');
+
+const finalHeading = document.getElementById('finalHeading');
+
 let playerScore = 0;
 let computerScore = 0;
 
@@ -40,8 +46,14 @@ function showScore() {
 
 function announceWinner() {
     if (playerScore > computerScore) {
+        modalOverlay.classList.add('open');
+        finalResult.classList.add('open');
+        finalHeading.innerText = 'Victory!'
         console.log("You won.")
     } else {
+        modalOverlay.classList.add('open');
+        finalResult.classList.add('open');
+        finalHeading.innerText = 'Defeat!'
         console.log("You lose.");
     };
 
@@ -102,6 +114,14 @@ scissorsBtn.addEventListener("click", function() {
     playRound("scissors", getComputerChoice());
 });
 
+playAgainBtn.addEventListener("click", function() {
+    modalOverlay.classList.remove('open');
+    finalResult.classList.remove('open');
+    rules.style.display = '';
+    explanation.innerText = '';
+    determination.innerHTML = '';
+    setColorBorders("draw");
+});
 
 // Play round
 

@@ -12,6 +12,13 @@
     <div class="wrapper">
         <h1 class="heading">Rock Paper Scissors</h1>
 
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="final-result" id="finalResult">
+            <!-- <h2 class="explanation">Scissors beats Paper</h2> -->
+            <h1 id="finalHeading"></h1>
+            <button class="play-again-btn" id="playAgain">Play again!</button>
+        </div>
+
         <main>
             <article class="card player">
                 <img src="./assets/Player.png" alt="player icon" class="player-icon">
@@ -36,7 +43,6 @@
                         <h2><img src="./assets/Paper.png" alt="paper" title="Paper" class="icon-sm"> beats <img src="./assets/Stone.png" alt="stone" title="Stone" class="icon-sm"></h2>
                     </div>
                     <h2 class="explanation" id="explanation"></h2>
-                    <!-- <h2><span>Player</span> has won!</h2> -->
                     <h2 id="determination"></h2>
                 </div>
             </div>
