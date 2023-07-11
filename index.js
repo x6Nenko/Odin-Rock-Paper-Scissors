@@ -192,6 +192,10 @@ playAgainBtn.addEventListener("click", function() {
     rules.style.display = '';
     explanation.innerText = '';
     determination.innerHTML = '';
+    playerImage.src='./assets/Dice-Question-LG.png';
+    playerImage.alt='dice with a question';
+    aiImage.src='./assets/Dice-Question-LG.png';
+    aiImage.alt='dice with a question';
     setColorBorders("draw");
 });
 
