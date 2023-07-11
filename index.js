@@ -22,7 +22,7 @@ const computerCard = document.querySelector('.computer');
 let playerScore = 0;
 let computerScore = 0;
 
-// Announce winner, score count functions and random AI choice
+// Announce winner, score count functions and random AI choice + everything related
 
 function getComputerChoice() {
     const choicesArray = ["rock", "paper", "scissors"];
@@ -30,6 +30,13 @@ function getComputerChoice() {
 
     return choicesArray[makeChoice];
 };
+
+function showScore() {
+    playerPoints.innerText = playerScore;
+    playerPointsOnTable.innerText = playerScore;
+    computerPoints.innerText = computerScore;
+    computerPointsOnTable.innerText = computerScore;
+}
 
 function announceWinner() {
     if (playerScore > computerScore) {
@@ -41,28 +48,14 @@ function announceWinner() {
     playerScore = 0;
     computerScore = 0;
 
-    playerPoints.innerText = playerScore;
-    playerPointsOnTable.innerText = playerScore;
-    computerPoints.innerText = computerScore;
-    computerPointsOnTable.innerText = computerScore;
-}
+    showScore();
+};
 
-function countScore(result) {
-    playerCard.classList.remove('won');
-    playerCard.classList.remove('lose');
-    computerCard.classList.remove('won');
-    computerCard.classList.remove('lose');
-
+function setColorBorders(result) {
     if (result === "won") {
-        playerScore += 1;
-        playerPoints.innerText = playerScore;
-        playerPointsOnTable.innerText = playerScore;
         playerCard.classList.add('won');
-        computerCard.classList.add('lose');
+        computerCard.classList.add('lose'); 
     } else if (result === "lose") {
-        computerScore += 1;
-        computerPoints.innerText = computerScore;
-        computerPointsOnTable.innerText = computerScore;
         playerCard.classList.add('lose');
         computerCard.classList.add('won');
     } else if (result === "draw") {
@@ -71,10 +64,24 @@ function countScore(result) {
         computerCard.classList.remove('won');
         computerCard.classList.remove('lose');
     };
+};
+
+function countScore(result) {
+    if (result === "won") {
+        playerScore += 1;
+        showScore();
+        setColorBorders("won");
+    } else if (result === "lose") {
+        computerScore += 1;
+        showScore();
+        setColorBorders("lose");
+    } else if (result === "draw") {
+        setColorBorders("draw");
+    };
 
     if (playerScore === 3 || computerScore === 3) {
         return announceWinner();
-    }
+    };
 };
 
 
@@ -168,6 +175,7 @@ function playRound(playerSelection, computerSelection) {
 
     if (player === "scissors") {
         if (computer === "scissors") {
+            countScore('draw');
             explanation.innerText = 'Scissors equals Scissors';
             determination.innerHTML = 'It\'s a <span>Draw</span>!';
             return console.log("Draw!");
