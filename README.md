@@ -1,6 +1,6 @@
 # Rock-Paper-Scissors (Odin Project)
 
-## [Live link is here.](https://x6nenko.github.io/Odin-Rock-Paper-Scissors/)
+[Live link is here.](https://x6nenko.github.io/Odin-Rock-Paper-Scissors/)
 
 ![Preview of a website.](./assets/preview.png)
 
